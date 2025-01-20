@@ -1,0 +1,6 @@
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.csproj.AssemblyReference.cache
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.GeneratedMSBuildEditorConfig.editorconfig
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.AssemblyInfoInputs.cache
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.AssemblyInfo.cs
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.csproj.CoreCompileInputs.cache
+E:\Programmation\Web\tomcat\webapps\tennis\obj\Debug\net8.0\tennis.sourcelink.json
