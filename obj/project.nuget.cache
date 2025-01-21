@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+9+D5gVLXl8=",
+  "dgSpecHash": "GjxksoNIGOs=",
   "success": true,
   "projectFilePath": "E:\\Programmation\\Back\\L2\\ObAVan\\C#\\tsipika-main\\tennis.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Herin'Iavo\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
     "C:\\Users\\Herin'Iavo\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.2\\microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "C:\\Users\\Herin'Iavo\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Herin'Iavo\\.nuget\\packages\\npgsql\\9.0.2\\npgsql.9.0.2.nupkg.sha512",
     "C:\\Users\\Herin'Iavo\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Herin'Iavo\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

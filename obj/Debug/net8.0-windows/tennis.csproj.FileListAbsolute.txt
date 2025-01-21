@@ -154,3 +154,5 @@ E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\obj\Debug\net8.0-windows\refint\
 E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\obj\Debug\net8.0-windows\tennis.pdb
 E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\obj\Debug\net8.0-windows\tennis.genruntimeconfig.cache
 E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\obj\Debug\net8.0-windows\ref\tennis.dll
+E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\obj\Debug\net8.0-windows\tennis.sourcelink.json
+E:\Programmation\Back\L2\ObAVan\C#\tsipika-main\bin\Debug\net8.0-windows\Newtonsoft.Json.dll

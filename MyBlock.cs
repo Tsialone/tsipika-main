@@ -41,11 +41,11 @@ namespace aff
             {
                 Font font = new Font("Arial", 7, FontStyle.Bold);
                 Brush brush = Brushes.Black;
-                string text = "" + this.idBlock;
+                string text = "" + (this.Rectangle.X + this.Rectangle.Width / 2) + ","+ (this.Rectangle.Y + this.Rectangle.Height / 2) ;
                 StringFormat format = new StringFormat
                 {
-                    Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center
+                    Alignment = StringAlignment.Far,
+                    LineAlignment = StringAlignment.Near
                 };
                 g.DrawString(text, font, brush, this.Rectangle, format);
             }

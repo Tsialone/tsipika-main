@@ -6,18 +6,17 @@ namespace aff
 {
     public class Fenetre : Form
     {
-        private Button button;
+
         public static CheckBox graphMod;
         private TerrainPanel terrainPanel;
-
+        public Button save;
+        public Button load;
         private MyConsole console;
         public static ScorePanel scorePanel;
 
         // Ajout des champs vitesse et point
         private Label vitesseLabel;
-        public static TextBox  vitesseInput;
-        private Label pointLabel;
-        public  static TextBox pointInput;
+        public static TextBox vitesseInput;
 
         public void initializeConsole()
         {
@@ -35,6 +34,9 @@ namespace aff
             TerrainEcouteur terrainEcouteur = new TerrainEcouteur();
             terrainPanel.MouseClick += terrainEcouteur.mouseClick;
             graphMod.CheckedChanged += terrainEcouteur.graph_Mod;
+            save.Click += terrainEcouteur._save;
+            load.Click += terrainEcouteur._load;
+
         }
 
         public static void repaintScore()
@@ -49,13 +51,28 @@ namespace aff
             {
                 Text = "graph mod",
                 Location = new Point(300, 20),
-                Checked = true
+                Checked = false
             };
+            save = new Button
+            {
+                Text = "Save",
+                Location = new Point(450, 160),
+                Width = 100,
+                Height = 60,
+            };
+             load = new Button
+            {
+                Text = "Load",
+                Location = new Point(450, 240),
+                Width = 100,
+                Height = 60,
+            };
+
         }
 
         private void configurationFenetre()
         {
-            Text = "Tennis Family";
+            Text = "tsipika";
             Width = 1200;
             Height = 670;
             terrainPanel = new TerrainPanel();
@@ -68,10 +85,13 @@ namespace aff
             this.Controls.Add(console);
             this.Controls.Add(scorePanel);
             this.Controls.Add(graphMod);
-            this.Controls.Add(vitesseLabel);
-            this.Controls.Add(vitesseInput);
-            this.Controls.Add(pointLabel);
-            this.Controls.Add(pointInput);
+            this.Controls.Add(Program.j1.suggest);
+            this.Controls.Add(Program.j2.suggest);
+            this.Controls.Add(save);
+            this.Controls.Add(load);
+
+
+
         }
     }
 }

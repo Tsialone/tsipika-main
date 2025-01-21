@@ -18,15 +18,15 @@ namespace aff
             this.DoubleBuffered = true;
             configurationTerrainLabel();
             InitializeTimer();
-            initilizeBlocks();
+            InitializeBlocks();
 
         }
 
 
         public void configurationTerrainLabel()
         {
-            this.Location = new Point(65, 85);
-            this.Size = new Size(1000, 442);
+            this.Location = new Point(600, 20);
+            this.Size = new Size(500, 500);
             this.Controls.Add(label);
             this.BackColor = Color.White;
 
@@ -38,7 +38,7 @@ namespace aff
             Graphics g = e.Graphics;
             drawBlocks(g);
             drawJBlocks(g);
-            checkWin();
+            // checkWin();
             drawWin(g);
             drawJTempBlock(g);
         }
@@ -56,14 +56,9 @@ namespace aff
             List<Joueur> joueurs = Program.joueurs;
             foreach (var joueur in joueurs)
             {
-                foreach (var winBlock in joueur.winBlocks)
+                foreach (var jW in joueur.winPoints)
                 {
-                    List<PointF> winPoint = new List<PointF>();
-                    foreach (var block in winBlock)
-                    {
-                        winPoint.Add(block.Center);
-
-                    }
+                    List<PointF> winPoint = jW;
                     Pen pen = new Pen(joueur.color, 3);
                     PointF[] point = winPoint.ToArray();
                     pen.Color = joueur.color;
@@ -94,27 +89,8 @@ namespace aff
 
         public void drawJTempBlock(Graphics g)
         {
-            List<Joueur> joueurs = Program.joueurs;
-            foreach (var joueur in joueurs)
-            {
-                foreach (var block in myBlocks)
-                {
-                    foreach (Direction item in joueur.tempDir())
-                    {
-                        foreach (var temp_point in item.points)
-                        {
-                            if (Fonction.ArePointsClose(block.Center, temp_point, 25))
-                            {
-                                int ellipseWidth = block.Rectangle.Width / 2;
-                                int ellipseHeight = block.Rectangle.Height / 2;
-                                int ellipseX = block.Rectangle.X + (block.Rectangle.Width - ellipseWidth) / 2;
-                                int ellipseY = block.Rectangle.Y + (block.Rectangle.Height - ellipseHeight) / 2;
-                                // g.FillEllipse(new SolidBrush(Color.LightGray), ellipseX, ellipseY, ellipseWidth, ellipseHeight);
-                            }
-                        }
-                    }
-                }
-            }
+
+
         }
         public void drawJBlocks(Graphics g)
         {
@@ -125,8 +101,8 @@ namespace aff
 
                 {
                     //class dot a ne pas oublier
-                    int ellipseWidth = block.Rectangle.Width / 2;
-                    int ellipseHeight = block.Rectangle.Height / 2;
+                    int ellipseWidth = block.Rectangle.Width / 4;
+                    int ellipseHeight = block.Rectangle.Height / 4;
                     int ellipseX = block.Rectangle.X + (block.Rectangle.Width - ellipseWidth) / 2;
                     int ellipseY = block.Rectangle.Y + (block.Rectangle.Height - ellipseHeight) / 2;
                     g.FillEllipse(new SolidBrush(joueur.color), ellipseX, ellipseY, ellipseWidth, ellipseHeight);
@@ -150,54 +126,31 @@ namespace aff
             List<Joueur> joueurs = Program.joueurs;
             foreach (var joueur in joueurs)
             {
-                List<Direction> tempDir = joueur.tempDir();
-                List<List<MyBlock>> tempBlock = new List<List<MyBlock>>();
-                foreach (var dir in tempDir)
-                {
-                    int count = 0;
-                    List<MyBlock> currentWinBlocks = new List<MyBlock>();
-                    foreach (var point in dir.points)
-                    {
-                        foreach (var Jblock in joueur.myBlocks)
-                        {
-                            if (Jblock.Center.Equals(point))
-                            {
-                                count++;
-                                currentWinBlocks.Add(Jblock);
-                            }
-                        }
-                    }
-                    if (count == joueur.iteration)
-                    {
-                        joueur.winBlocks.Add(currentWinBlocks);
-                        dir.win = true;
-                    }
-                }
+                joueur.initilizeWinPoint();
             }
         }
 
-        public void initilizeBlocks()
+        public void InitializeBlocks()
         {
+            int xMin = 0;
+            int yMin = 0;
 
+            int xMax = this.Width; 
+            int yMax = this.Height; 
 
-            int xMax = this.Location.X + this.Width;
-            int xMin = this.Location.X;
+            int blockWidth = 50; 
+            int blockHeight = 50; 
 
-            int yMax = this.Location.Y + this.Height;
-            int yMin = this.Location.Y;
-
-            int blockWidth = 30;
-            int blockHeight = 30;
-
-
-            for (int i = 0; i <= xMax; i += blockWidth)
+            for (int i = xMin; i + blockWidth <= xMax; i += blockWidth)
             {
-                for (int j = 0; j <= yMax; j += blockHeight)
+                for (int j = yMin; j + blockHeight <= yMax; j += blockHeight)
                 {
                     MyBlock theBlock = new MyBlock(myBlocks.Count, i, j, blockWidth, blockHeight);
+
                     myBlocks.Add(theBlock);
                 }
             }
         }
+
     }
 }
