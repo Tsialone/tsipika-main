@@ -6,7 +6,6 @@ namespace aff
 {
     public class Fenetre : Form
     {
-
         public static CheckBox graphMod;
         private TerrainPanel terrainPanel;
         public Button save;
@@ -16,7 +15,7 @@ namespace aff
 
         // Ajout des champs vitesse et point
         private Label vitesseLabel;
-        public static TextBox vitesseInput;
+        public static TextBox nbr;
 
         public void initializeConsole()
         {
@@ -36,7 +35,6 @@ namespace aff
             graphMod.CheckedChanged += terrainEcouteur.graph_Mod;
             save.Click += terrainEcouteur._save;
             load.Click += terrainEcouteur._load;
-
         }
 
         public static void repaintScore()
@@ -60,7 +58,7 @@ namespace aff
                 Width = 100,
                 Height = 60,
             };
-             load = new Button
+            load = new Button
             {
                 Text = "Load",
                 Location = new Point(450, 240),
@@ -68,6 +66,19 @@ namespace aff
                 Height = 60,
             };
 
+            // Configuration du Label et TextBox pour la vitesse
+            vitesseLabel = new Label
+            {
+                Text = "Nbr:",
+                Location = new Point(300, 60),
+                Width = 50
+            };
+            nbr = new TextBox
+            {
+                Location = new Point(350, 60),
+                Width = 40,
+                Text = "10"
+            };
         }
 
         private void configurationFenetre()
@@ -85,13 +96,12 @@ namespace aff
             this.Controls.Add(console);
             this.Controls.Add(scorePanel);
             this.Controls.Add(graphMod);
+            this.Controls.Add(vitesseLabel); // Ajout du label
+            this.Controls.Add(nbr); // Ajout de la zone de texte
             this.Controls.Add(Program.j1.suggest);
             this.Controls.Add(Program.j2.suggest);
             this.Controls.Add(save);
             this.Controls.Add(load);
-
-
-
         }
     }
 }

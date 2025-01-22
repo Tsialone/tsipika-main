@@ -39,6 +39,19 @@ namespace terrain
         }
         public void _jClick(object sender, EventArgs e)
         {
+
+            int nbr = int.Parse(Fenetre.nbr.Text);
+            if (this.myBlocks.Count > nbr)
+            {
+                var removedBlock = this.myBlocks[0];
+                this.myBlocks.RemoveAt(0);
+                MyConsole.addLine("removed " + removedBlock);
+                Program.placedPoint.Remove(removedBlock.Center);
+                Program.winedPoint.Remove(removedBlock.Center);
+                this.winPoints = this.winPoints
+                    .Where(p => !p.Contains(removedBlock.Center))
+                    .ToList();
+            }
             PointF? pointNullable = this.sugAttack(Program.tempPlayerAd);
             if (pointNullable.HasValue)
             {
@@ -56,8 +69,10 @@ namespace terrain
                 {
                     int avant = this.myBlocks.Count;
                     this.myBlocks.Add(myBlock);
-                    MyConsole.addLine($"Bloc ajouté sans points gagnants : {this.nom}, avant : {avant}, après : {this.myBlocks.Count}");
+                    // MyConsole.addLine($"Bloc ajouté sans points gagnants : {this.nom}, avant : {avant}, après : {this.myBlocks.Count}");
                 }
+
+
 
                 PointF? adversarySuggestion = Program.tempPlayerAd.sugAttack(this);
                 if (adversarySuggestion.HasValue)
@@ -67,10 +82,12 @@ namespace terrain
                     Program.tempPlayerAd = this;
                 }
             }
+
             this.suggest.Enabled = false;
             this.suggest.Text = this.nom;
             Program.reversePlayer();
         }
+
 
         public Joueur(int IdJoueur, string nom)
         {
@@ -140,7 +157,7 @@ namespace terrain
         }
 
 
-        public  static MyBlock?  getBlock(List<MyBlock> myBlocks, PointF x)
+        public static MyBlock? getBlock(List<MyBlock> myBlocks, PointF x)
         {
             foreach (var block in myBlocks)
             {

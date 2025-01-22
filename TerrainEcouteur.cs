@@ -112,11 +112,11 @@ public class TerrainEcouteur
         if (e.Button.Equals(MouseButtons.Left))
         {
 
-            MyConsole.addLine("taille" + TerrainPanel.myBlocks.Count);
             foreach (var block in TerrainPanel.myBlocks)
             {
                 if (Fonction.ArePointsClose(block.Center, mousePoint, 25))
                 {
+                    MyConsole.addLine("taille" + block.Center);
                     if (!placedPoint.Contains(block.Center))
                     {
                         foreach (var j in joueurs)
@@ -125,6 +125,27 @@ public class TerrainEcouteur
                             j.suggest.Enabled = false;
                         }
                         Program.reversePlayer();
+                        try
+                        {
+                            int nbr = int.Parse(Fenetre.nbr.Text);
+                            if (joueurs[0].myBlocks.Count > nbr)
+                            {
+                                var removedBlock = joueurs[0].myBlocks[0];
+                                joueurs[0].myBlocks.RemoveAt(0);
+
+                                placedPoint.Remove(removedBlock.Center);
+                                Program.winedPoint.Remove(removedBlock.Center);
+
+                                joueurs[0].winPoints = joueurs[0].winPoints
+                                    .Where(p => !p.Contains(removedBlock.Center))
+                                    .ToList();
+
+                            }
+                        }
+                        catch (System.Exception)
+                        {
+
+                        }
                         joueurs[0].myBlocks.Add(block);
                         placedPoint.Add(block.Center);
                         if (joueurs[0].mandresy(block, joueurs[0].iteration) != null)
@@ -132,7 +153,6 @@ public class TerrainEcouteur
                             List<PointF> winPoint = joueurs[0].mandresy(block, joueurs[0].iteration);
                             joueurs[0].winPoints.Add(winPoint);
                             Program.winedPoint.AddRange(winPoint);
-                            // Program.winedPoint.AddRange(placedPoint);
 
 
                         }
@@ -142,8 +162,6 @@ public class TerrainEcouteur
                             joueurs[1].suggest.Enabled = true;
                             joueurs[1].suggest.Text = "Sug " + joueurs[1].nom + " at " + joueurs[1].sugAttack(joueurs[0]);
                             Program.tempPlayerAd = joueurs[0];
-                            // Program.winedPoint.AddRange(placedPoint);
-
 
                         }
                     }
