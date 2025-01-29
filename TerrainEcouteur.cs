@@ -125,27 +125,6 @@ public class TerrainEcouteur
                             j.suggest.Enabled = false;
                         }
                         Program.reversePlayer();
-                        try
-                        {
-                            int nbr = int.Parse(Fenetre.nbr.Text);
-                            if (joueurs[0].myBlocks.Count > nbr)
-                            {
-                                var removedBlock = joueurs[0].myBlocks[0];
-                                joueurs[0].myBlocks.RemoveAt(0);
-
-                                placedPoint.Remove(removedBlock.Center);
-                                Program.winedPoint.Remove(removedBlock.Center);
-
-                                joueurs[0].winPoints = joueurs[0].winPoints
-                                    .Where(p => !p.Contains(removedBlock.Center))
-                                    .ToList();
-
-                            }
-                        }
-                        catch (System.Exception)
-                        {
-
-                        }
                         joueurs[0].myBlocks.Add(block);
                         placedPoint.Add(block.Center);
                         if (joueurs[0].mandresy(block, joueurs[0].iteration) != null)

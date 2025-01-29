@@ -4,93 +4,17 @@
     "points": [
       {
         "IsEmpty": false,
-        "X": 175.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
+        "X": 275.0,
         "Y": 175.0
       },
       {
         "IsEmpty": false,
-        "X": 125.0,
-        "Y": 225.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 175.0,
-        "Y": 275.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 75.0,
-        "Y": 325.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 425.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 425.0,
+        "X": 225.0,
         "Y": 225.0
       },
       {
         "IsEmpty": false,
         "X": 325.0,
-        "Y": 275.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 225.0,
-        "Y": 325.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 375.0,
-        "Y": 325.0
-      }
-    ],
-    "winpoint": []
-  },
-  {
-    "Nom": "J2",
-    "points": [
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 175.0,
-        "Y": 225.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 275.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 225.0,
-        "Y": 175.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 325.0,
-        "Y": 75.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 425.0,
-        "Y": 175.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 375.0,
         "Y": 275.0
       },
       {
@@ -101,12 +25,191 @@
       {
         "IsEmpty": false,
         "X": 325.0,
+        "Y": 375.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
         "Y": 325.0
       },
       {
         "IsEmpty": false,
+        "X": 225.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 425.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 25.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 425.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
         "X": 325.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 75.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 75.0,
+        "Y": 25.0
+      }
+    ],
+    "winpoint": [
+      [
+        {
+          "IsEmpty": false,
+          "X": 375.0,
+          "Y": 425.0
+        },
+        {
+          "IsEmpty": false,
+          "X": 325.0,
+          "Y": 375.0
+        },
+        {
+          "IsEmpty": false,
+          "X": 275.0,
+          "Y": 325.0
+        },
+        {
+          "IsEmpty": false,
+          "X": 225.0,
+          "Y": 275.0
+        },
+        {
+          "IsEmpty": false,
+          "X": 175.0,
+          "Y": 225.0
+        }
+      ]
+    ]
+  },
+  {
+    "Nom": "J2",
+    "points": [
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 325.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 325.0,
+        "Y": 325.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
         "Y": 375.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 125.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 75.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 325.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 425.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 75.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 125.0,
+        "Y": 75.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 25.0
       }
     ],
     "winpoint": []
@@ -116,53 +219,28 @@
     "placedPoint": [
       {
         "IsEmpty": false,
-        "X": 175.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
+        "X": 225.0,
         "Y": 175.0
       },
       {
         "IsEmpty": false,
-        "X": 175.0,
-        "Y": 225.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 225.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 275.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 425.0,
-        "Y": 125.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 425.0,
+        "X": 275.0,
         "Y": 175.0
       },
       {
         "IsEmpty": false,
-        "X": 425.0,
+        "X": 275.0,
         "Y": 225.0
       },
       {
         "IsEmpty": false,
-        "X": 375.0,
-        "Y": 275.0
+        "X": 225.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 325.0,
+        "Y": 225.0
       },
       {
         "IsEmpty": false,
@@ -172,49 +250,119 @@
       {
         "IsEmpty": false,
         "X": 275.0,
-        "Y": 325.0
+        "Y": 275.0
       },
       {
         "IsEmpty": false,
-        "X": 225.0,
+        "X": 275.0,
         "Y": 325.0
       },
       {
         "IsEmpty": false,
         "X": 325.0,
-        "Y": 325.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 375.0,
         "Y": 325.0
       },
       {
         "IsEmpty": false,
         "X": 325.0,
         "Y": 375.0
-      }
-    ],
-    "winedpoint": [
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 375.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 325.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 125.0
+      },
       {
         "IsEmpty": false,
         "X": 325.0,
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 175.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 225.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 425.0,
+        "Y": 275.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
         "Y": 75.0
       },
       {
         "IsEmpty": false,
         "X": 225.0,
-        "Y": 175.0
+        "Y": 125.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 175.0,
+        "Y": 125.0
+      }
+    ],
+    "winedpoint": [
+      {
+        "IsEmpty": false,
+        "X": 375.0,
+        "Y": 425.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 325.0,
+        "Y": 375.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 275.0,
+        "Y": 325.0
+      },
+      {
+        "IsEmpty": false,
+        "X": 225.0,
+        "Y": 275.0
       },
       {
         "IsEmpty": false,
         "X": 175.0,
         "Y": 225.0
-      },
-      {
-        "IsEmpty": false,
-        "X": 125.0,
-        "Y": 275.0
       }
     ]
   }

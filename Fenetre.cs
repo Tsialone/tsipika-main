@@ -15,7 +15,7 @@ namespace aff
 
         // Ajout des champs vitesse et point
         private Label vitesseLabel;
-        public static TextBox nbr;
+        // public static TextBox nbr;
 
         public void initializeConsole()
         {
@@ -67,18 +67,18 @@ namespace aff
             };
 
             // Configuration du Label et TextBox pour la vitesse
-            vitesseLabel = new Label
-            {
-                Text = "Nbr:",
-                Location = new Point(300, 60),
-                Width = 50
-            };
-            nbr = new TextBox
-            {
-                Location = new Point(350, 60),
-                Width = 40,
-                Text = "10"
-            };
+            // vitesseLabel = new Label
+            // {
+            //     Text = "Nbr:",
+            //     Location = new Point(300, 60),
+            //     Width = 50
+            // };
+            // nbr = new TextBox
+            // {
+            //     Location = new Point(350, 60),
+            //     Width = 40,
+            //     Text = "10"
+            // };
         }
 
         private void configurationFenetre()
@@ -97,7 +97,7 @@ namespace aff
             this.Controls.Add(scorePanel);
             this.Controls.Add(graphMod);
             this.Controls.Add(vitesseLabel); // Ajout du label
-            this.Controls.Add(nbr); // Ajout de la zone de texte
+            // this.Controls.Add(nbr); // Ajout de la zone de texte
             this.Controls.Add(Program.j1.suggest);
             this.Controls.Add(Program.j2.suggest);
             this.Controls.Add(save);
