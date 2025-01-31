@@ -88,12 +88,12 @@ namespace aff
             Height = 670;
             terrainPanel = new TerrainPanel();
 
-            console = new MyConsole();
+            // console = new MyConsole();
             scorePanel = new ScorePanel();
 
             // Ajout des composants à la fenêtre
             this.Controls.Add(terrainPanel);
-            this.Controls.Add(console);
+            // this.Controls.Add(console);
             this.Controls.Add(scorePanel);
             this.Controls.Add(graphMod);
             this.Controls.Add(vitesseLabel); // Ajout du label

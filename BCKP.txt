@@ -1,0 +1,578 @@
+
+
+using System.Data.SqlClient;
+using System.Text;
+using aff;
+using geo;
+
+namespace terrain
+{
+
+    public class Joueur
+    {
+
+        public Color color { get; set; }
+        public Button suggest { get; set; }
+
+        public PointF ghost { get; set; }
+        public int iteration { get; set; }
+        // public List<MyForm> myForms { get; set; }
+        public int IdJoueur { get; set; }
+        public string nom { get; set; }
+        public List<MyBlock> myBlocks { get; set; }
+        public List<List<PointF>> winPoints { get; set; }
+
+
+
+
+        public Score score { get; set; }
+        public Joueur(int IdJoueur, string nom, int iteration, Color color, Button button)
+        {
+            this.IdJoueur = IdJoueur;
+            this.nom = nom;
+            this.myBlocks = new List<MyBlock>();
+            this.color = color;
+            this.iteration = iteration;
+            this.winPoints = new List<List<PointF>>();
+            this.suggest = button;
+            this.suggest.Click += this._jClick;
+        }
+        public void _jClick(object sender, EventArgs e)
+        {
+
+            PointF? pointNullable = this.sugAttack(Program.tempPlayerAd);
+            if (pointNullable.HasValue)
+            {
+                // MyConsole.addLine(" " + this.nom + " " + pointNullable);
+                PointF point = pointNullable.Value;
+                MyBlock myBlock = getBlock(TerrainPanel.myBlocks, point);
+                List<PointF> winPoint = this.mandresy(myBlock, this.iteration);
+                if (winPoint != null)
+                {
+                    this.myBlocks.Add(myBlock);
+                    this.winPoints.Add(winPoint);
+                    Program.winedPoint.AddRange(winPoint);
+                }
+                else
+                {
+                    int avant = this.myBlocks.Count;
+                    this.myBlocks.Add(myBlock);
+                }
+                PointF? adversarySuggestion = Program.tempPlayerAd.sugAttack(this);
+                if (adversarySuggestion.HasValue)
+                {
+                    Program.tempPlayerAd.suggest.Enabled = true;
+                    Program.tempPlayerAd.suggest.Text = $"Sug {Program.tempPlayerAd.nom} at {adversarySuggestion}";
+                    Program.tempPlayerAd = this;
+                }
+            }
+            this.suggest.Enabled = false;
+            this.suggest.Text = this.nom;
+            Program.reversePlayer();
+        }
+
+
+        public Joueur(int IdJoueur, string nom)
+        {
+            this.IdJoueur = IdJoueur;
+            this.nom = nom;
+            this.myBlocks = new List<MyBlock>();
+            this.color = color;
+            this.winPoints = new List<List<PointF>>();
+        }
+        public Joueur()
+        {
+
+        }
+        public PointF? deffense(Joueur adverse)
+        {
+            return this.sugAttack(adverse);
+        }
+        public PointF? sugAttack(Joueur adverse, bool isReversed = false)
+        {
+            List<MyBlock> terrainBlocks = TerrainPanel.myBlocks;
+            List<PointF> adP = adverse.myBlocks.Select(block => block.Center).ToList();
+
+            if (this.myBlocks.Count >= 3 && adverse.myBlocks.Count >= 3)
+            {
+                // Maka attaque finission
+                foreach (var Tblock in terrainBlocks)
+                {
+                    if (!this.myBlocks.Contains(Tblock))
+                    {
+                        List<PointF> mandresyTest = this.mandresy(Tblock, this.iteration);
+                        if (mandresyTest != null && !adP.Intersect(mandresyTest).Any())
+                        {
+                            // MyConsole.addLine("Maka niveau 1");
+                            // MyConsole.addLine($"\n\nThe block {Tblock.Center}, Mandresy count: {mandresyTest.Count}");
+                            return Tblock.Center;
+                        }
+                    }
+                }
+                // deffence
+                // MyConsole.addLine("Maka niveau 2 deffence");
+                foreach (var Tblock in terrainBlocks)
+                {
+                    if (!isReversed && adverse.mandresy(Tblock, adverse.iteration) != null)
+                    {
+                        return adverse.sugAttack(this, true);
+                    }
+                }
+                // Maka attaque
+                foreach (var Tblock in terrainBlocks)
+                {
+                    if (!this.myBlocks.Contains(Tblock))
+                    {
+                        List<PointF> mandresyTest = this.mandresy(Tblock, this.iteration - 1);
+                        if (mandresyTest != null && !adP.Intersect(mandresyTest).Any())
+                        {
+                            // MyConsole.addLine("Maka niveau 3 attaque maivana");
+                            // MyConsole.addLine($"\n\nThe block {Tblock.Center}, Mandresy count: {mandresyTest.Count}");
+                            return Tblock.Center;
+                        }
+                    }
+                }
+
+
+            }
+
+            return null;
+        }
+
+
+        public static MyBlock? getBlock(List<MyBlock> myBlocks, PointF x)
+        {
+            foreach (var block in myBlocks)
+            {
+                if (Fonction.ArePointsClose(block.Center, x, 25))
+                {
+                    return block;
+                }
+            }
+            return null;
+        }
+        public void initilizeWinPoint()
+        {
+
+        }
+
+
+        public List<PointF>? mandresy(MyBlock myBlock, int iteration)
+        {
+            List<MyBlock> myBlocks = this.myBlocks;
+            List<PointF> myLp = new List<PointF>();
+            PointF P = myBlock.Center;
+            foreach (var block in myBlocks)
+            {
+                myLp.Add(block.Center);
+            }
+            //verifier y+
+            // MyConsole.addLine("\n\nverification y+ ");
+            List<PointF> Ltp = new List<PointF>();
+            List<List<PointF>> branche = new List<List<PointF>>();
+            // Ltp.Add(myBlock.Center);
+            float x = P.X;
+            float y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                     if (!Ltp.Contains(new PointF(x, y)))
+                    {
+                        Ltp.Add(new PointF(x, y));
+                    }
+                    //verification x+
+                    float temp_x = x;
+                    List<PointF> tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_x += myBlock.Rectangle.Width;
+                        PointF tempPointSapanana = new PointF(temp_x, y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                    //verification x-
+                    temp_x = x;
+                    tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_x -= myBlock.Rectangle.Width;
+                        PointF tempPointSapanana = new PointF(temp_x, y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+                y += myBlock.Rectangle.Height;
+
+            }
+            // verifier y-
+            // MyConsole.addLine("\n\nverification y- ");
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                     if (!Ltp.Contains(new PointF(x, y)))
+                    {
+                        Ltp.Add(new PointF(x, y));
+                    }
+                    //verification x+
+                    float temp_x = x;
+                    List<PointF> tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_x += myBlock.Rectangle.Width;
+                        PointF tempPointSapanana = new PointF(temp_x, y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                    //verification x-
+                    temp_x = x;
+                    tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_x -= myBlock.Rectangle.Width;
+                        PointF tempPointSapanana = new PointF(temp_x, y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    break;
+                }
+                y -= myBlock.Rectangle.Height;
+
+            }
+            foreach (var b in branche)
+            {
+                Console.WriteLine(this.nom + " y+-");
+                foreach (var item in b)
+                {
+                    Console.WriteLine(item);
+
+                }
+            }
+            Console.WriteLine("nombre de branche " + branche.Count);
+
+
+
+            //verification de x+
+            // MyConsole.addLine("\n\nverification x+ ");
+            // branche = new List<List<PointF>>();
+            Ltp = new List<PointF>();
+            // Ltp.Add(myBlock.Center);
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    if (!Ltp.Contains(new PointF(x, y)))
+                    {
+                        Ltp.Add(new PointF(x, y));
+                    }
+                    //verification y+
+                    float temp_y = y;
+                    List<PointF> tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_y += myBlock.Rectangle.Height;
+                        PointF tempPointSapanana = new PointF(x, temp_y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                    //verification y-
+                    temp_y = y;
+                    tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_y -= myBlock.Rectangle.Height;
+                        PointF tempPointSapanana = new PointF(x, temp_y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+                x += myBlock.Rectangle.Width;
+            }
+            // verifier x-
+            // MyConsole.addLine("\n\nverification x- ");
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    if (!Ltp.Contains(new PointF(x, y)))
+                    {
+                        Ltp.Add(new PointF(x, y));
+                    }
+                    //verification y+
+                    float temp_y = y;
+                    List<PointF> tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_y += myBlock.Rectangle.Height;
+                        PointF tempPointSapanana = new PointF(x, temp_y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+                    //verification y-
+                    temp_y = y;
+                    tempSapanana = new List<PointF>();
+                    for (float Count = 0; Count < iteration; Count++)
+                    {
+                        temp_y -= myBlock.Rectangle.Height;
+                        PointF tempPointSapanana = new PointF(x, temp_y);
+                        if (myLp.Contains(tempPointSapanana) && !Program.winedPoint.Contains(tempPointSapanana) && Ltp.Count != iteration)
+                        {
+                            tempSapanana.Add(tempPointSapanana);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (tempSapanana.Count != 0)
+                    {
+                        if (!Fonction.contains(branche, tempSapanana))
+                        {
+                            branche.Add(tempSapanana);
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    break;
+                }
+                x -= myBlock.Rectangle.Width;
+
+            }
+            foreach (var b in branche)
+            {
+                Console.WriteLine(this.nom + " x+-");
+                foreach (var item in b)
+                {
+                    Console.WriteLine(item);
+
+                }
+                //   return Ltp;
+            }
+            Console.WriteLine("nombre de branche " + branche.Count + " il a place a" + P);
+            Console.WriteLine("ito ny Ltp any");
+            foreach (var item in Ltp)
+            {
+                Console.WriteLine("Ltp" + item);
+
+            }
+            // //verification de od+
+            // MyConsole.addLine("\n\nverification od+ ");
+            Ltp = new List<PointF>();
+            // Ltp.Add(myBlock.Center);
+
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                x += myBlock.Rectangle.Width;
+                y -= myBlock.Rectangle.Height;
+
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    Ltp.Add(new PointF(x, y));
+                }
+                else
+                {
+                    break;
+                }
+            }
+            // // verifier od-
+            // MyConsole.addLine("\n\nverification od- ");
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                x -= myBlock.Rectangle.Width;
+                y += myBlock.Rectangle.Height;
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    Ltp.Add(new PointF(x, y));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (Ltp.Count == iteration)
+            {
+
+                return Ltp;
+                // throw new Exception("D" + Ltp.Count);
+
+            }
+            // //verification de og+
+            // MyConsole.addLine("\n\nverification og+ ");
+            Ltp = new List<PointF>();
+            // Ltp.Add(myBlock.Center);
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                x -= myBlock.Rectangle.Width;
+                y -= myBlock.Rectangle.Height;
+
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    Ltp.Add(new PointF(x, y));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+
+            // // verifier og-
+            // MyConsole.addLine("\n\nverification og- ");
+            x = P.X;
+            y = P.Y;
+            for (int i = 0; i < iteration; i++)
+            {
+                x += myBlock.Rectangle.Width;
+                y += myBlock.Rectangle.Height;
+                if (myLp.Contains(new PointF(x, y)) && !Program.winedPoint.Contains(new PointF(x, y)) && Ltp.Count != iteration)
+                {
+                    Ltp.Add(new PointF(x, y));
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (Ltp.Count == iteration)
+            {
+                return Ltp;
+                // throw new Exception("G" + Ltp.Count);
+            }
+            // MyConsole.addLine("\n\n liste finale " + Ltp.Count);
+
+            return null;
+        }
+
+
+    }
+}
+

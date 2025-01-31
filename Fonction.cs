@@ -1,37 +1,37 @@
 public class Fonction
 {
-public static List<PointF> GetPointsByEquation(
-    PointF center, 
-    Func<float, float> equation, 
-    float startX, 
-    float endX, 
-    float scaleFactorX = 5.5f, 
-    float scaleFactorY = 20.0f, 
-    float step = 0.1f,
-    float rotationAngle = 89.5f)
-{
-    List<PointF> points = new List<PointF>();
-
-    float cosAngle = (float)Math.Cos(rotationAngle);
-    float sinAngle = (float)Math.Sin(rotationAngle);
-
-    for (float x = startX; x <= endX; x += step)
+    public static List<PointF> GetPointsByEquation(
+        PointF center,
+        Func<float, float> equation,
+        float startX,
+        float endX,
+        float scaleFactorX = 5.5f,
+        float scaleFactorY = 20.0f,
+        float step = 0.1f,
+        float rotationAngle = 89.5f)
     {
-        float y = equation(x);
+        List<PointF> points = new List<PointF>();
 
-        float scaledX = x * scaleFactorX;
-        float scaledY = y * scaleFactorY;
+        float cosAngle = (float)Math.Cos(rotationAngle);
+        float sinAngle = (float)Math.Sin(rotationAngle);
 
-        float rotatedX = scaledX * cosAngle - scaledY * sinAngle;
-        float rotatedY = scaledX * sinAngle + scaledY * cosAngle;
+        for (float x = startX; x <= endX; x += step)
+        {
+            float y = equation(x);
 
-        float translatedX = center.X + rotatedX;
-        float translatedY = center.Y - rotatedY;
-        points.Add(new PointF(translatedX, translatedY));
+            float scaledX = x * scaleFactorX;
+            float scaledY = y * scaleFactorY;
+
+            float rotatedX = scaledX * cosAngle - scaledY * sinAngle;
+            float rotatedY = scaledX * sinAngle + scaledY * cosAngle;
+
+            float translatedX = center.X + rotatedX;
+            float translatedY = center.Y - rotatedY;
+            points.Add(new PointF(translatedX, translatedY));
+        }
+
+        return points;
     }
-
-    return points;
-}
 
 
     public static Func<float, float, PointF> GetCircle()
@@ -43,7 +43,7 @@ public static List<PointF> GetPointsByEquation(
             return new PointF(x, -y);
         };
     }
-    public static List<PointF> GetPointsOfSemiCircle(PointF center, float radius, float endAngle,  float rotationAngle = 180 , float startAngle = 0, float step = 0.05f)
+    public static List<PointF> GetPointsOfSemiCircle(PointF center, float radius, float endAngle, float rotationAngle = 180, float startAngle = 0, float step = 0.05f)
     {
         List<PointF> points = new List<PointF>();
         var semiCircleFunc = GetCircle();
@@ -118,8 +118,67 @@ public static List<PointF> GetPointsByEquation(
         }
         return pointsRectiligne;
     }
-    public static Boolean estDansCetteDroite(PointF A, PointF B, PointF C) {
-    double determinant = ((B.X - A.X) * (C.Y - A.Y)) - ((B.Y - A.Y) * (C.X - A.X));
-    return Math.Abs(determinant) <= 0.0001;
-}
+
+    public static bool contains(List<List<PointF>> branche, List<PointF> sampan)
+    {
+
+        foreach (var b in branche)
+        {
+            if (b.Intersect(sampan).Count() != 0)
+            {
+
+                return true;
+            }
+        }
+        return false;
+    }
+    public static List<PointF> orderByY(List<PointF> points)
+    {
+        List<PointF> resp = new List<PointF>();
+        List<float> reference = new List<float>();
+        foreach (var pp in points)
+        {
+            reference.Add(pp.Y);
+        }
+        reference = reference.Order().ToList();
+        foreach (var f in reference)
+        {
+            foreach (var pp in points)
+            {
+                if (pp.Y.Equals(f))
+                {
+                    resp.Add(pp);
+                    break;
+                }
+            }
+        }
+        return resp;
+    }
+    public static List<PointF> orderByX(List<PointF> points)
+    {
+        List<PointF> resp = new List<PointF>();
+        List<float> reference = new List<float>();
+        foreach (var pp in points)
+        {
+            reference.Add(pp.X);
+        }
+        reference = reference.Order().ToList();
+        foreach (var f in reference)
+        {
+            foreach (var pp in points)
+            {
+                if (pp.X.Equals(f))
+                {
+                    resp.Add(pp);
+                    break;
+                }
+            }
+        }
+        return resp;
+    }
+    public static Boolean estDansCetteDroite(PointF A, PointF B, PointF C)
+    {
+        double determinant = ((B.X - A.X) * (C.Y - A.Y)) - ((B.Y - A.Y) * (C.X - A.X));
+        return Math.Abs(determinant) <= 0.0001;
+    }
 }

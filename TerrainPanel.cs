@@ -25,8 +25,8 @@ namespace aff
 
         public void configurationTerrainLabel()
         {
-            this.Location = new Point(600, 20);
-            this.Size = new Size(500, 500);
+            this.Location = new Point(570, 20);
+            this.Size = new Size(600, 600);
             this.Controls.Add(label);
             this.BackColor = Color.White;
 
@@ -59,17 +59,23 @@ namespace aff
                 foreach (var jW in joueur.winPoints)
                 {
                     List<PointF> winPoint = jW;
-                    Pen pen = new Pen(joueur.color, 3);
-                    PointF[] point = winPoint.ToArray();
-                    pen.Color = joueur.color;
-                    if (point.Count() >= 1)
+                    if (winPoint.Count >= 1)
                     {
-                        g.DrawLines(pen, point);
+                        foreach (var point in winPoint)
+                        {
+                            int haloSize = 30;
+                            Color lightColor = Color.FromArgb(100, joueur.color);
+                            SolidBrush lightBrush = new SolidBrush(lightColor);
+                            g.FillEllipse(lightBrush, point.X - haloSize / 2, point.Y - haloSize / 2, haloSize, haloSize);
+                            int pointSize = 6;
+                            SolidBrush pointBrush = new SolidBrush(joueur.color);
+                            g.FillEllipse(pointBrush, point.X - pointSize / 2, point.Y - pointSize / 2, pointSize, pointSize);
+                        }
                     }
                 }
-
             }
         }
+
 
         private void InitializeTimer()
         {
@@ -135,11 +141,11 @@ namespace aff
             int xMin = 0;
             int yMin = 0;
 
-            int xMax = this.Width; 
-            int yMax = this.Height; 
+            int xMax = this.Width;
+            int yMax = this.Height;
 
-            int blockWidth = 50; 
-            int blockHeight = 50; 
+            int blockWidth = 50;
+            int blockHeight = 50;
 
             for (int i = xMin; i + blockWidth <= xMax; i += blockWidth)
             {

@@ -5,13 +5,13 @@ using terrain;
 public class ScorePanel : Panel
 {
 
-    public Label label   = new Label
-            {
-                Location = new Point(0, 0),
-                Width = 200,
-                Height = 100,
-                Text = String.Empty
-            };
+    public  static Label label = new Label
+    {
+        Location = new Point(0, 0),
+        Width = 200,
+        Height = 100,
+        Text = String.Empty
+    };
     public ScorePanel()
     {
         configurationTerrainLabel();
@@ -25,14 +25,13 @@ public class ScorePanel : Panel
         this.BackColor = Color.LightGray;
         this.Controls.Add(label);
     }
-    public void configurationTerrainLabel()
+    public  static void configurationTerrainLabel()
     {
-        Score score = new Score();
-        
-            label.Text ="";
-            label.Text += "\n  Socre"  ;
-            label.Text += "\n  Socre"  ;
-            label.Refresh();
 
-        }
+        label.Text = "";
+        label.Text += "\n  " + Program.j1.nom + " Score: " + Program.j1.score;
+        label.Text += "\n  " + Program.j2.nom + " Score: " + Program.j2.score;
+        label.Refresh();
+
+    }
 }

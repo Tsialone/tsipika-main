@@ -15,7 +15,7 @@ public class MyConsole : Panel
 
     public static void addLine(string line)
     {
-        label.Text += "\n-" + line;
+        label.Text += "\n" + line;
         if (label.Parent is Panel parentPanel)
         {
             parentPanel.AutoScrollPosition = new Point(0, parentPanel.VerticalScroll.Maximum); 

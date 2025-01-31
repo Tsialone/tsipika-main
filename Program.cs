@@ -33,11 +33,15 @@ namespace aff
         public static List<PointF> placedPoint = new List<PointF>();
 
         public static List<Joueur> joueurs = new List<Joueur> { j1, j2 };
-        static void Main()
+    
+
+        public static void Main()
         {
             Application.EnableVisualStyles();
             openFenetre();
-        }
+            // Exemple d'utilisation
+                  }
+
 
         public static void reversePlayer()
         {

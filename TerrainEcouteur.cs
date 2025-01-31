@@ -116,7 +116,7 @@ public class TerrainEcouteur
             {
                 if (Fonction.ArePointsClose(block.Center, mousePoint, 25))
                 {
-                    MyConsole.addLine("taille" + block.Center);
+                    // MyConsole.addLine("taille" + block.Center);
                     if (!placedPoint.Contains(block.Center))
                     {
                         foreach (var j in joueurs)
@@ -132,17 +132,25 @@ public class TerrainEcouteur
                             List<PointF> winPoint = joueurs[0].mandresy(block, joueurs[0].iteration);
                             joueurs[0].winPoints.Add(winPoint);
                             Program.winedPoint.AddRange(winPoint);
-
+                            MessageBox.Show("Le joueur " + joueurs[0].nom + " a gagner");
+                            joueurs[0].score +=1;
+                             ScorePanel. configurationTerrainLabel();
+                            for (int i = 0; i < 2; i++)
+                            {
+                                joueurs[i].myBlocks.Clear();
+                                joueurs[i].winPoints.Clear();
+                                Program.winedPoint.Clear();
+                                placedPoint.Clear();
+                            }
 
                         }
-                        if (joueurs[1].sugAttack(joueurs[0]) != null)
+                        if (joueurs[1].sugAttack(joueurs[1]) != null)
                         {
-
                             joueurs[1].suggest.Enabled = true;
                             joueurs[1].suggest.Text = "Sug " + joueurs[1].nom + " at " + joueurs[1].sugAttack(joueurs[0]);
                             Program.tempPlayerAd = joueurs[0];
-
                         }
+
                     }
                     return;
                 }
